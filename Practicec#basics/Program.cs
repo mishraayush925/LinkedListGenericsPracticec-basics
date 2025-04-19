@@ -509,6 +509,34 @@ namespace Space1
             return res;
 
         }
+
+        public static Node SortList(Node head)
+        {
+            Node _head = head;
+            Node _start = head;
+            bool _sorted=false;
+            while (_start != null &&_sorted==false)
+            {
+                 _sorted = true;
+                while (_head != null)
+                {
+                    if (_head.val > _head.next?.val)
+                    {
+                        int temp = _head.val;
+                        _head.val = _head.next.val;
+                        _head.next.val = temp;
+                        _sorted = false;
+                        // _head = _head.next;
+                    }
+                    _head = _head.next;
+                
+                }
+                _head = _start;
+                //_start = _start.next;
+            }
+            return head;
+
+        }
     }
 
     class Executer
@@ -557,7 +585,7 @@ namespace Space1
         {
             Console.WriteLine("Linked list ");
             MyLinkedList items = new MyLinkedList();
-            MyLinkedList items2 = new MyLinkedList();
+           // MyLinkedList items2 = new MyLinkedList();
             Console.Write("Nodes Count : ");
             int listLength = Convert.ToInt32(Console.ReadLine());
             Console.Write("\nenter items :");
@@ -568,39 +596,40 @@ namespace Space1
             }
 
             Console.Write("Nodes Count : ");
-            int listLength2 = Convert.ToInt32(Console.ReadLine());
-            Console.Write("\nenter items :");
-            while (listLength2-- != 0)
-            {
-                int item = Convert.ToInt32(Console.ReadLine());
-                items2.AddNode(item);
-            }
+            //int listLength2 = Convert.ToInt32(Console.ReadLine());
+            //Console.Write("\nenter items :");
+            //while (listLength2-- != 0)
+            //{
+            //    int item = Convert.ToInt32(Console.ReadLine());
+            //    items2.AddNode(item);
+            //}
 
             Console.Write("Items are : ");
             items.ShowList();
-            Console.WriteLine("\nItems are : ");
-            items2.ShowList();
-            Console.WriteLine("");
-            MyLinkedList.ShowListRecusrive(MyLinkedList.MergeSortedLists(items.GetListInfo().Head, items2.GetListInfo().Head));
-            Console.WriteLine("");
-            Console.Write(MyLinkedList.FindMaxMinSum(items.GetListInfo().Head));
+            Console.WriteLine("\nItems after sorting : ");
+            MyLinkedList.ShowListRecusrive(MyLinkedList.SortList(items.GetListInfo().Head));
+            //items2.ShowList();
+            //Console.WriteLine("");
+            //MyLinkedList.ShowListRecusrive(MyLinkedList.MergeSortedLists(items.GetListInfo().Head, items2.GetListInfo().Head));
+            //Console.WriteLine("");
+            //Console.Write(MyLinkedList.FindMaxMinSum(items.GetListInfo().Head));
 
-            Console.WriteLine("Length : " + items.GetListInfo().Length);
-            Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
-            Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
-            //Console.Write("Node value to remove: ");
-            //int val = Convert.ToInt32(Console.ReadLine());
-            //items.RemoveNode(val);
-            items.Reverse();
-            Console.Write("\nItems reversed : ");
-            items.ShowList();
-            Console.WriteLine("Length : " + items.GetListInfo().Length);
-            Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
-            Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
-            Console.Write("showing list using recursion : ");
-            MyLinkedList.ShowListRecusrive(items.GetListInfo().Head);
-            Console.WriteLine("\n");
-            MyLinkedList.ShowListRecusrive(items.GetListInfo().Head, 3); //skips first 2 elements 
+            //Console.WriteLine("Length : " + items.GetListInfo().Length);
+            //Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
+            //Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
+            ////Console.Write("Node value to remove: ");
+            ////int val = Convert.ToInt32(Console.ReadLine());
+            ////items.RemoveNode(val);
+            //items.Reverse();
+            //Console.Write("\nItems reversed : ");
+            //items.ShowList();
+            //Console.WriteLine("Length : " + items.GetListInfo().Length);
+            //Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
+            //Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
+            //Console.Write("showing list using recursion : ");
+            //MyLinkedList.ShowListRecusrive(items.GetListInfo().Head);
+            //Console.WriteLine("\n");
+            //MyLinkedList.ShowListRecusrive(items.GetListInfo().Head, 3); //skips first 2 elements 
 
         }
     }
