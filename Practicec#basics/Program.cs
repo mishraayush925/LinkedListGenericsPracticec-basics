@@ -384,7 +384,7 @@ namespace Space1
 
         }
 
-        public void ShowListRecusrive(Node node,int skip=0) //skip n elements
+        public static void ShowListRecusrive(Node node,int skip=0) //skip n elements
         {
             if (node == null)
                 return;
@@ -433,7 +433,82 @@ namespace Space1
 
         }
 
+        public static Node MergeSortedLists(Node head1, Node head2)
+        {
+            if (head1 == null) return head2;
+            if (head2 == null) return head1;
+            Node _head1= head1;
+            Node _head2= head2;
+            Node _current = null , start=null;
+            if (head1.val > head2.val)
+            {
+                _current  = _head2;
+              //  start = _current;
+                _head2 = _head2.next;
+            }
+            else
+            {
+                _current  = _head1;
+                _head1 = _head1.next;
+                
+            }
+            start = _current;
+            while (_head1!=null && _head2!=null)
+            {
+                //_current = _current.next;
+                if (_head1.val > _head2.val)
+                {
+                    
+                    _current.next = _head2;
+                    _current = _current.next;
+                    _head2 = _head2.next;
+                }
+                else
+                {
 
+                    _current.next = _head1;
+                    _current = _current.next;
+                    _head1 =_head1.next;
+                }
+            }
+           // _current = _current.next;
+            if (_head1 != null)
+            { 
+                _current.next = _head1;
+            }
+            else
+            {
+                _current.next = _head2;
+            }
+                return start;
+
+        }
+
+        public static string FindMaxMinSum(Node head)
+        {
+            string res= "";
+            Node _head = head;
+            int _max = head.val, _min = head.val;
+            int sum = 0;
+            while (_head != null)
+            {
+                if(_head.val > _max)
+                {
+                    _max = _head.val;
+                }
+                if(_head.val < _min)
+                {
+                    _min = _head.val;
+                }
+                sum += _head.val;
+                _head = _head.next;
+            }
+            res = "max : " + _max + " min : " + _min + " sum : " + sum;
+
+
+            return res;
+
+        }
     }
 
     class Executer
@@ -482,6 +557,7 @@ namespace Space1
         {
             Console.WriteLine("Linked list ");
             MyLinkedList items = new MyLinkedList();
+            MyLinkedList items2 = new MyLinkedList();
             Console.Write("Nodes Count : ");
             int listLength = Convert.ToInt32(Console.ReadLine());
             Console.Write("\nenter items :");
@@ -491,8 +567,24 @@ namespace Space1
                 items.AddNode(item);
             }
 
+            Console.Write("Nodes Count : ");
+            int listLength2 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("\nenter items :");
+            while (listLength2-- != 0)
+            {
+                int item = Convert.ToInt32(Console.ReadLine());
+                items2.AddNode(item);
+            }
+
             Console.Write("Items are : ");
             items.ShowList();
+            Console.WriteLine("\nItems are : ");
+            items2.ShowList();
+            Console.WriteLine("");
+            MyLinkedList.ShowListRecusrive(MyLinkedList.MergeSortedLists(items.GetListInfo().Head, items2.GetListInfo().Head));
+            Console.WriteLine("");
+            Console.Write(MyLinkedList.FindMaxMinSum(items.GetListInfo().Head));
+
             Console.WriteLine("Length : " + items.GetListInfo().Length);
             Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
             Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
@@ -506,9 +598,9 @@ namespace Space1
             Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
             Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
             Console.Write("showing list using recursion : ");
-            items.ShowListRecusrive(items.GetListInfo().Head);
+            MyLinkedList.ShowListRecusrive(items.GetListInfo().Head);
             Console.WriteLine("\n");
-            items.ShowListRecusrive(items.GetListInfo().Head,3); //skips first 2 elements 
+            MyLinkedList.ShowListRecusrive(items.GetListInfo().Head, 3); //skips first 2 elements 
 
         }
     }
