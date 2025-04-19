@@ -1,4 +1,6 @@
-﻿namespace Space1
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace Space1
 {
     class User
     {
@@ -282,14 +284,26 @@
 
     class MyLinkedList
     {
-        private class Node
+        public class ListInfo
+        {
+            public int Length;
+            public Node Head;
+            public Node Tail;
+        }
+        public class Node
         {
             public int val;
-            public Node next;
+            public Node? next=null;
             public Node(int val = -1, Node next = null)
             {
                 this.val = val;
                 this.next = next;
+            }
+
+            public override string ToString()
+            {
+                string str = "Value : "+val + " Next's value : " + next?.val;
+                return str;
             }
         }
 
@@ -314,11 +328,111 @@
             }
             _nodeCount++;
         }
+
+        public ListInfo GetListInfo()
+        {
+            ListInfo info = new ListInfo();
+            info.Length = _nodeCount;
+            info.Head = head;
+
+            info.Tail = tail;
+            return info;
+        }
+        public void ShowList()
+        {
+            Node node = head;
+            if (_nodeCount == 0)
+            {
+                Console.WriteLine("List is empty");
+                return;
+            }
+            while (node != null)
+            {
+                Console.Write(node.val + " ");
+                node = node.next;
+            }
+
+        }
+
+        public void Reverse() 
+        {
+            if (_nodeCount == 0)
+            {
+                Console.WriteLine("List is empty");
+                return ;
+            }
+            Node current = head;
+            Node prev = null;
+            Node next = head;
+
+            while (current != null)
+            {
+               
+               //current.next = prev;
+               // prev = current;
+                next = next.next;
+                current.next = prev;
+                prev = current;
+
+                current = next;
+               // current.next = 
+
+            }
+            tail = head;
+            tail.next = null;
+            head = prev;
+
+        }
+
+        public void ShowListRecusrive(Node node)
+        {
+
+        }
+
+        public void RemoveNode(int val)
+        {
+            if (_nodeCount < 0) 
+            {
+                Console.WriteLine("list empty");
+                return;
+            }
+            Node current = head;
+            Node prev = null;
+            while (current != null)
+            {
+                if (val == head.val)
+                {
+                    head = head.next;
+                    _nodeCount--;
+                    Console.WriteLine("First Node removed");
+                    return;
+                }
+                if (current.next == null && current.val !=val)
+                {
+                    
+                    Console.WriteLine("item not found");
+                    return;
+                }
+                if (current.next.val == val)
+                {  
+                    current.next = current.next.next;
+                    _nodeCount--;
+                    Console.WriteLine("node from list removed");
+                    return;
+
+                }
+                current = current.next;
+            }
+            Console.WriteLine("Item not found");
+
+        }
+
+
     }
 
     class Executer
     {
-        public static void Main(string[] args)
+        public static void Main1(string[] args)
         {
             CustomLinkedList items = new CustomLinkedList();
             Console.Write("Nodes Count : ");
@@ -355,6 +469,36 @@
             items2.ShowNodes(x);
 
 
+        }
+
+        public static void Main(string[] args)
+        
+        {
+            Console.WriteLine("Linked list ");
+            MyLinkedList items = new MyLinkedList();
+            Console.Write("Nodes Count : ");
+            int listLength = Convert.ToInt32(Console.ReadLine());
+            Console.Write("\nenter items :");
+            while (listLength-- != 0)
+            {
+                int item = Convert.ToInt32(Console.ReadLine());
+                items.AddNode(item);
+            }
+
+            Console.Write("Items are : ");
+            items.ShowList();
+            Console.WriteLine("Length : " + items.GetListInfo().Length);
+            Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
+            Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
+            //Console.Write("Node value to remove: ");
+            //int val = Convert.ToInt32(Console.ReadLine());
+            //items.RemoveNode(val);
+            items.Reverse();
+            Console.Write("\nItems reversed : ");
+            items.ShowList();
+            Console.WriteLine("Length : " + items.GetListInfo().Length);
+            Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
+            Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
         }
     }
 
