@@ -384,7 +384,7 @@ namespace Space1
 
         }
 
-        public void ShowListRecusrive(Node node,int skip=0)
+        public void ShowListRecusrive(Node node,int skip=0) //skip n elements
         {
             if (node == null)
                 return;
