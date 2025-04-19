@@ -384,8 +384,14 @@ namespace Space1
 
         }
 
-        public void ShowListRecusrive(Node node)
+        public void ShowListRecusrive(Node node,int skip=0)
         {
+            if (node == null)
+                return;
+            if(skip<=0)
+            Console.Write(node.val + " , ");
+            skip--;
+            ShowListRecusrive(node.next,skip);
 
         }
 
@@ -499,6 +505,11 @@ namespace Space1
             Console.WriteLine("Length : " + items.GetListInfo().Length);
             Console.WriteLine("Head : " + items.GetListInfo().Head.ToString());
             Console.WriteLine("Tail : " + items.GetListInfo().Tail.ToString());
+            Console.Write("showing list using recursion : ");
+            items.ShowListRecusrive(items.GetListInfo().Head);
+            Console.WriteLine("\n");
+            items.ShowListRecusrive(items.GetListInfo().Head,3); //skips first 2 elements 
+
         }
     }
 
