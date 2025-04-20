@@ -23,7 +23,7 @@ namespace Space1
             get => "Vehicles";
         }
     }
-
+    
     class Car : Vehicle
     {
         public new string VType
@@ -50,6 +50,10 @@ namespace Space1
 
         public static void  PrintParam(string name, int price)
         {
+            int add(int a, int b)
+            {
+                return a + b;
+            }
             Console.WriteLine(name);
             Console.WriteLine(price);
         }
@@ -526,13 +530,40 @@ namespace Space1
                         _head.val = _head.next.val;
                         _head.next.val = temp;
                         _sorted = false;
-                        // _head = _head.next;
                     }
                     _head = _head.next;
                 
                 }
                 _head = _start;
-                //_start = _start.next;
+            }
+            return head;
+
+        }
+
+        public static Node SortListUsingNodeSwapping(Node head)
+        {
+            Node _head = head;
+            Node _start = head;
+            Node prev = head;
+           // Node _temp = head;
+
+            bool _sorted = false;
+            while (_start != null && _sorted == false)
+            {
+                _sorted = true;
+                while (_head != null)
+                {
+                    if (_head.val > _head.next?.val)
+                    {
+                      Node _temp = _head.next;
+                      _head.next = _head.next.next;
+                        _temp.next = _head;
+                        _sorted = false;
+                    }
+                    _head = _head.next;
+
+                }
+                _head = _start;
             }
             return head;
 
