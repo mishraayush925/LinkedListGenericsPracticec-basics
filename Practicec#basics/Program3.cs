@@ -127,15 +127,67 @@ namespace Practicec_basics
 
         public static string RemoveDuplicates(string str)
         {
-            string temp = "";
-            foreach(char c in str)
+           HashSet<char> uniq = new HashSet<char>();
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (char c in str)
             {
-                if (!temp.Contains(c))
+                if (!uniq.Contains(c))
                 {
-                    temp = temp + c;
+                    uniq.Add(c);
+                    stringBuilder.Append(c);
                 }
             }
-            return temp;
+            
+          
+
+            return stringBuilder.ToString();
+        }
+
+        public static string RetainOnlylastOccurence(string str)
+        {
+            HashSet<char> uniq = new HashSet<char>();
+            StringBuilder stringBuilder = new StringBuilder();
+           
+            for(int i = str.Length - 1; i >= 0; i--)
+            {
+                if (!uniq.Contains(str[i]))
+                {
+                    uniq.Add(str[i]);
+                    stringBuilder.Insert(0, str[i]);
+                }
+            }
+
+
+            return stringBuilder.ToString();
+        }
+
+        public static string ReverseStr(StringBuilder str)
+        {
+            char temp;
+            for(int i = 0; i < str.Length/2; i++)
+            {
+                temp=str[i];
+                str[i] = str[str.Length-1-i];
+                str[str.Length - 1 - i]= temp;
+            }
+            return str.ToString();
+        }
+
+        public static bool CheckIfOnlyUniqChars(string str)
+        {
+            HashSet<char> chars = new HashSet<char>();
+            foreach (char c in str) 
+            { 
+                if (!chars.Contains(c))
+                {
+                    chars.Add(c);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 
@@ -148,9 +200,14 @@ namespace Practicec_basics
             { 
                  Console.WriteLine("enter string : ");
                 string str = Console.ReadLine();
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append(str);
                 //MyString mystr = new MyString(str);
 
-                Console.WriteLine(MyString.RemoveDuplicates(str));
+                //Console.WriteLine(MyString.RemoveDuplicates(str));
+                //Console.WriteLine(MyString.RetainOnlylastOccurence(str));
+                //Console.WriteLine(MyString.ReverseStr(stringBuilder));
+                Console.WriteLine(MyString.CheckIfOnlyUniqChars(str));
                 //Console.WriteLine("Word : " + mystr.TotalWords());
 
             }
