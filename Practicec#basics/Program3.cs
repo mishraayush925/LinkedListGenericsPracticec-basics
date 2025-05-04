@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Practicec_basics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,108 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Practicec_basics
 {
+    enum E1
+    {
+        None = 0,
+        first = 1,
+        second = 2,
+        third = 3,
+        fourth = 4
+    }
+
+    public class Array2d
+    {
+        static  int _r, _c;
+        Array2d(int r, int c)
+        {
+            _r = r;
+            _c = c;
+        }
+        int[,] myArray = new int[_r, _c];
+
+        public void BuildArray()
+        {
+            Console.WriteLine("Enter elements");
+            for(int i=0;i< _r; i++)
+            {
+                for(int  j=0;j< _c; j++)
+                {
+                    int x;
+                    string str = Console.ReadLine();
+                    Int32.TryParse(str, out x);
+                    myArray[i,j] = x;
+                }
+            }
+        }
+        public void PrintArray()
+        {
+            for (int i = 0; i < _r; i++)
+            {
+                for (int j = 0; j < _c; j++)
+                {
+                    Console.Write(myArray[i,j]+" ");
+                }
+                Console.WriteLine("");
+            }
+        }
+    }
+
+    public class MyExceptions : Exception
+    {
+        public MyExceptions(string msg):base(msg) { }
+
+        public override string Message
+        {
+            get
+            {
+                return "custom exception thrown ";
+            }
+
+        }
+
+    }
+    public class TestInbuiltExceptions
+    {
+       static  int[] x = { 1, 2, 3, 4, 5 };
+
+        public static void A(int i)
+        {
+            B(i);
+            Console.WriteLine("in A");
+
+        }
+        public static void B(int j)
+        {
+            C(j);
+            Console.WriteLine("in B");
+
+        }
+        public static void C(int k)
+        {
+           // if (k > 10) throw new ArgumentOutOfRangeException();
+           // Console.WriteLine(x[k]);
+            try
+            {
+
+                if (k > 10) throw new ArgumentOutOfRangeException();
+                Console.WriteLine(x[k]);
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine("1st : "+e.Message);
+            }
+            //catch (IndexOutOfRangeException e)
+            //{
+            //    Console.WriteLine("2nd : " + e.Message);
+            //}
+            //catch(Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+            Console.WriteLine("in C");
+
+        }
+    }
     public class IndexerDemo
     {
         string[] _str = new string[10];
@@ -30,6 +133,7 @@ namespace Practicec_basics
         {
             return this._str[i].Length * 2;
         }
+        public static string ClassName { get; set; }
     }
 
     public class IndexerDemo2
@@ -38,7 +142,7 @@ namespace Practicec_basics
 
         public int this[int i]
         {
-            private get
+             get
             {
                 return _lst[i];
             }
@@ -273,47 +377,34 @@ namespace Practicec_basics
         public static void Main(string[] args)
         {
 
-            //while (true)
-            //{ 
-            //     Console.WriteLine("enter string : ");
-            //    string str = Console.ReadLine();
-            //    StringBuilder stringBuilder = new StringBuilder();
-            //    stringBuilder.Append(str);
-            //    //MyString mystr = new MyString(str);
 
-            //    //Console.WriteLine(MyString.RemoveDuplicates(str));
-            //    //Console.WriteLine(MyString.RetainOnlylastOccurence(str));
-            //    //Console.WriteLine(MyString.ReverseStr(stringBuilder));
-            //    Console.WriteLine(MyString.CheckIfOnlyUniqChars(str));
-            //    //Console.WriteLine("Word : " + mystr.TotalWords());
-
+            //try
+            //{
+            //    TestInbuiltExceptions.A(5);
             //}
-            //int x = 5;
-            //int y = 7;
-            //int z = 7.Square()+ 5.cube();
-            //object obj = x;
-            //string str1 = "55";
-            //string str2 = "ayush";
-            //obj.printObj();
-            //object obj2 = (object)y;
-            //Console.WriteLine(obj);
-            //obj.ToString();
-
-            //IndexerDemo indexerDemo = new IndexerDemo();
-            //indexerDemo[7] = "ayush";
-            //Console.WriteLine(indexerDemo.CountWords(7));
-            //indexerDemo[8] = "mishra";
-            //Console.WriteLine(indexerDemo.CountWords(8));
-            IndexerDemo2 indexerDemo2 = new IndexerDemo2();
-            for(int i = 0; i < 20; i++)
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("from main : "+ex.Message);
+            //}
+            MyExceptions myExceptions = new MyExceptions("this msg");
+            try
             {
-                indexerDemo2[i] = i * 1000;
+                string str = Console.ReadLine();
+                int x = 0;
+                if(Int32.TryParse(str, out x))
+                {
+                    throw new MyExceptions("could be parsed sucessfully");
+                }
+                else
+                {
+                    throw new MyExceptions("could not be parsed");
+                }
             }
-            for(int i = 0; i < 20; i++)
-            {
-                indexerDemo2.PrintIthElement(i);
+            catch (Exception ex)
+            { 
+              Console.WriteLine(ex.ToString());
             }
-
+           
 
 
 
@@ -350,3 +441,52 @@ namespace Practicec_basics
 
 //// Console.WriteLine(list.Find(CheckEvenodd));
 //list.FindAll(CheckEvenodd).PrintList();
+
+
+//while (true)
+//{ 
+//     Console.WriteLine("enter string : ");
+//    string str = Console.ReadLine();
+//    StringBuilder stringBuilder = new StringBuilder();
+//    stringBuilder.Append(str);
+//    //MyString mystr = new MyString(str);
+
+//    //Console.WriteLine(MyString.RemoveDuplicates(str));
+//    //Console.WriteLine(MyString.RetainOnlylastOccurence(str));
+//    //Console.WriteLine(MyString.ReverseStr(stringBuilder));
+//    Console.WriteLine(MyString.CheckIfOnlyUniqChars(str));
+//    //Console.WriteLine("Word : " + mystr.TotalWords());
+
+//}
+//int x = 5;
+//int y = 7;
+//int z = 7.Square()+ 5.cube();
+//object obj = x;
+//string str1 = "55";
+//string str2 = "ayush";
+//obj.printObj();
+//object obj2 = (object)y;
+//Console.WriteLine(obj);
+//obj.ToString();
+
+//IndexerDemo indexerDemo = new IndexerDemo();
+//indexerDemo[7] = "ayush";
+//Console.WriteLine(indexerDemo.CountWords(7));
+//indexerDemo[8] = "mishra";
+//Console.WriteLine(indexerDemo.CountWords(8));
+//IndexerDemo2 indexerDemo2 = new IndexerDemo2();
+//for(int i = 0; i < 20; i++)
+//{
+//    indexerDemo2[i] = i * 1000;
+//}
+////for(int i = 0; i < 20; i++)
+////{
+////    // indexerDemo2.PrintIthElement(i);
+////    E1 e;
+
+
+////}
+
+//// int x=  indexerDemo2[8];
+//Array values = Enum.GetValues(typeof(E1));
+//Array values2 = Enum.GetNames(typeof(E1));
