@@ -7,6 +7,63 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Practicec_basics
 {
+    public class IndexerDemo
+    {
+        string[] _str = new string[10];
+
+        public string this[ int i] 
+        {
+            get
+            {
+                return _str[i];
+
+            }
+            set
+            {
+                _str[i] = value;
+            }
+        
+        
+        }
+
+        public int CountWords(int i)
+        {
+            return this._str[i].Length * 2;
+        }
+    }
+
+    public class IndexerDemo2
+    {
+        int[] _lst = new int[100];
+
+        public int this[int i]
+        {
+            private get
+            {
+                return _lst[i];
+            }
+            set
+            {
+                _lst[i] = value;
+            }
+        }
+
+        public void PrintIthElement(int i)
+        {
+            Console.WriteLine(_lst[i]);
+        }
+    }
+    public static class ExtendInt
+    {
+        public static int Square(this int x)
+        {
+            return x * x;
+        }
+        public static int cube(this int x)
+        {
+            return x * x * x;
+        }
+    }
     public static class ExtendString
     {
         public static void PrintStringwithInfo(this string s, int n)
@@ -24,6 +81,26 @@ namespace Practicec_basics
                 Console.WriteLine(s);
             }
            
+        }
+        public static void printObj(this object obj)
+        {
+            Console.WriteLine("Your obj : " + obj);
+        }
+        public static void printObjStr(this object obj)
+        {
+            Console.WriteLine("Your obj : " + obj);
+        }
+
+        public static int TrySquare(this string str)
+        {
+            int x = 0;
+            if(Int32.TryParse(str,  out x))
+            {
+                Console.WriteLine("res : " + x * x);
+                return x * x;
+            }
+            Console.WriteLine("Cannot be parsed");
+            return 0;
         }
     }
 
@@ -195,23 +272,51 @@ namespace Practicec_basics
     {
         public static void Main(string[] args)
         {
-            
-            while (true)
-            { 
-                 Console.WriteLine("enter string : ");
-                string str = Console.ReadLine();
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.Append(str);
-                //MyString mystr = new MyString(str);
 
-                //Console.WriteLine(MyString.RemoveDuplicates(str));
-                //Console.WriteLine(MyString.RetainOnlylastOccurence(str));
-                //Console.WriteLine(MyString.ReverseStr(stringBuilder));
-                Console.WriteLine(MyString.CheckIfOnlyUniqChars(str));
-                //Console.WriteLine("Word : " + mystr.TotalWords());
+            //while (true)
+            //{ 
+            //     Console.WriteLine("enter string : ");
+            //    string str = Console.ReadLine();
+            //    StringBuilder stringBuilder = new StringBuilder();
+            //    stringBuilder.Append(str);
+            //    //MyString mystr = new MyString(str);
 
+            //    //Console.WriteLine(MyString.RemoveDuplicates(str));
+            //    //Console.WriteLine(MyString.RetainOnlylastOccurence(str));
+            //    //Console.WriteLine(MyString.ReverseStr(stringBuilder));
+            //    Console.WriteLine(MyString.CheckIfOnlyUniqChars(str));
+            //    //Console.WriteLine("Word : " + mystr.TotalWords());
+
+            //}
+            //int x = 5;
+            //int y = 7;
+            //int z = 7.Square()+ 5.cube();
+            //object obj = x;
+            //string str1 = "55";
+            //string str2 = "ayush";
+            //obj.printObj();
+            //object obj2 = (object)y;
+            //Console.WriteLine(obj);
+            //obj.ToString();
+
+            //IndexerDemo indexerDemo = new IndexerDemo();
+            //indexerDemo[7] = "ayush";
+            //Console.WriteLine(indexerDemo.CountWords(7));
+            //indexerDemo[8] = "mishra";
+            //Console.WriteLine(indexerDemo.CountWords(8));
+            IndexerDemo2 indexerDemo2 = new IndexerDemo2();
+            for(int i = 0; i < 20; i++)
+            {
+                indexerDemo2[i] = i * 1000;
             }
-           
+            for(int i = 0; i < 20; i++)
+            {
+                indexerDemo2.PrintIthElement(i);
+            }
+
+
+
+
         }
         
        
