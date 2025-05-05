@@ -19,20 +19,22 @@ namespace Practicec_basics
 
     public class Array2d
     {
-        static  int _r, _c;
-        Array2d(int r, int c)
+          int _r, _c;
+        public Array2d(int r, int c)
         {
             _r = r;
             _c = c;
+            myArray =  new int[_r, _c];
+
         }
-        int[,] myArray = new int[_r, _c];
+        int[,] myArray;
 
         public void BuildArray()
         {
             Console.WriteLine("Enter elements");
             for(int i=0;i< _r; i++)
             {
-                for(int  j=0;j< _c; j++)
+                for(int  j=0;j < _c; j++)
                 {
                     int x;
                     string str = Console.ReadLine();
@@ -41,7 +43,7 @@ namespace Practicec_basics
                 }
             }
         }
-        public void PrintArray()
+        public int[,] PrintArray()
         {
             for (int i = 0; i < _r; i++)
             {
@@ -51,6 +53,94 @@ namespace Practicec_basics
                 }
                 Console.WriteLine("");
             }
+            return myArray;
+        }
+        public int[,] GetArray()
+        {
+            return myArray;
+        }
+        public static int[] FlattenArray(int[,] array)
+        {
+            int[] res= new int[array.GetLength(0)*array.GetLength(1)];
+            //int s = array.GetLength(0) * array.GetLength(1);
+            int k = 0;
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    res[k++] = array[i,j];
+                }
+                //Console.WriteLine("");
+            }
+            return res;
+        }
+
+        public static int[] RotateByNth(int[] arr , int n , bool left=true)
+        {
+            if (n >= arr.Length)
+            {
+                throw new Exception("Array cannot be rotated");
+            }
+            else if(left) 
+            {
+                while (n-- > 0) 
+                {
+                    arr = ShiftLeft(arr);
+                
+                }
+            }
+            else if (!left)
+            {
+                //call shift right 
+            }
+                foreach (int i in arr)
+                {
+                    Console.WriteLine(i + " ");
+                }
+            return arr;
+        }
+
+        public static int[] ShiftLeft(int[] arr)
+        {
+            int temp = arr[0];
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                //temp = arr[i];
+                arr[i] = arr[i + 1];
+            }
+            arr[arr.Length - 1] = temp;
+            foreach (int i in arr)
+            {
+               // Console.WriteLine(i + " ");
+            }
+            return arr;
+        }
+
+        public static int[] ReverseFirstKElementsOfArray(int [] arr, int k=0)
+        {
+            if(k == 0)
+            {
+                k = arr.Length;
+            }
+            if(arr.Length < k)
+            {
+                throw new Exception("k should be less than array's size");
+            }
+            else
+            {
+                int temp = arr[0];
+                for(int i=0;i<(arr.Length/2) - 1; i++)
+                {
+                    arr[i] = arr[k - i - 1];
+                    arr[k - i - 1] = temp;
+                    temp = arr[i + 1];
+                }
+            }
+            foreach (int i in arr)
+            {
+                 Console.WriteLine(i + " ");
+            }
+            return arr;
         }
     }
 
@@ -378,34 +468,13 @@ namespace Practicec_basics
         {
 
 
-            //try
-            //{
-            //    TestInbuiltExceptions.A(5);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("from main : "+ex.Message);
-            //}
-            MyExceptions myExceptions = new MyExceptions("this msg");
-            try
-            {
-                string str = Console.ReadLine();
-                int x = 0;
-                if(Int32.TryParse(str, out x))
-                {
-                    throw new MyExceptions("could be parsed sucessfully");
-                }
-                else
-                {
-                    throw new MyExceptions("could not be parsed");
-                }
-            }
-            catch (Exception ex)
-            { 
-              Console.WriteLine(ex.ToString());
-            }
-           
+           Array2d array2D = new Array2d(4,2);
 
+            array2D.BuildArray();
+            array2D.PrintArray();
+            // Array2d.RotateByNth(Array2d.FlattenArray(array2D.GetArray()),3);
+            //Array2d.ShiftLeft(Array2d.FlattenArray(array2D.GetArray()));
+            Array2d.ReverseFirstKElementsOfArray(Array2d.FlattenArray(array2D.GetArray()));
 
 
         }
@@ -490,3 +559,30 @@ namespace Practicec_basics
 //// int x=  indexerDemo2[8];
 //Array values = Enum.GetValues(typeof(E1));
 //Array values2 = Enum.GetNames(typeof(E1));
+
+//try
+//{
+//    TestInbuiltExceptions.A(5);
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine("from main : "+ex.Message);
+//}
+//MyExceptions myExceptions = new MyExceptions("this msg");
+//try
+//{
+//    string str = Console.ReadLine();
+//    int x = 0;
+//    if (Int32.TryParse(str, out x))
+//    {
+//        throw new MyExceptions("could be parsed sucessfully");
+//    }
+//    else
+//    {
+//        throw new MyExceptions("could not be parsed");
+//    }
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine(ex.ToString());
+//}
